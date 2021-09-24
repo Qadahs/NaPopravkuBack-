@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('tag',function(){
-   return \App\Models\Tags::all();
-});
+Route::get('/article',[\App\Http\Controllers\Articles\ArticleController::class,'get']);
 Route::post('/register',[\App\Http\Controllers\Authentication\RegisterController::class,'post']);
 Route::post('/login',[\App\Http\Controllers\Authentication\LoginController::class,'post']);
 Route::middleware('auth:sanctum')->group(function(){

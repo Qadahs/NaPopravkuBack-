@@ -9,4 +9,9 @@ class ArticleTag extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $table='article_tag';
+    public function tag()
+    {
+        return $this->belongsTo(Tags::class,'tags_id','id');
+    }
 }
