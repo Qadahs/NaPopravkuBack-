@@ -18,27 +18,27 @@ class ApplicationErrors
             {
                 case 'register':
                 {
-                    $errorsArray["errors"][]=RegistrationError::getError();
-                    $errorsArray["messages"][]=RegistrationError::getMessage();
-                    $errorsArray["codes"][]=RegistrationError::getCode();
+                    self::getData($errorsArray,RegistrationError::class);
                     break;
                 }
                 case 'login':
                 {
-                    $errorsArray["errors"][]=LoginError::getError();
-                    $errorsArray["messages"][]=LoginError::getMessage();
-                    $errorsArray["codes"][]=LoginError::getCode();
+                    self::getData($errorsArray,LoginError::class);
                     break;
                 }
                 default: {
-                    $errorsArray["errors"][]=DefaultError::getError();
-                    $errorsArray["messages"][]=DefaultError::getMessage();
-                    $errorsArray["codes"][]=DefaultError::getCode();
+                    self::getData($errorsArray,DefaultError::class);
                     break;
                 }
             }
         }
         return $errorsArray;
 
+    }
+    private static function getData(&$arr,$class)
+    {
+        $arr["errors"][]=$class::getError();
+        $arr["messages"][]=$class::getMessage();
+        $arr["codes"][]=$class::getCode();
     }
 }
