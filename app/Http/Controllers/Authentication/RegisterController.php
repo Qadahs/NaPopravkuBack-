@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Rest\Errors\ApplicationErrors;
+use App\Modules\Rest\RestResponse;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -23,13 +24,13 @@ class RegisterController extends Controller
         ]);
         if(!$user)
         {
-        rest(417, [], ApplicationErrors::sendError(['register']));
+            return RestResponse::response(417,[],['register']);
         };
         $token = $user->createToken('secretToken')->plainTextToken;
         $response = [
             'user'=>$user,
             'token'=>$token,
         ];
-        return response($response,201);
+        return RestResponse::response(201,$response);
     }
 }

@@ -15,5 +15,9 @@ class DefaultError implements ApplicationErrorInterface
     {
         return "Ошибка на сервере";
     }
+    public static function getCode()
+    {
+       return 500;
+    }
 
 }

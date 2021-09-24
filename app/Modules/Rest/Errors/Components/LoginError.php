@@ -14,6 +14,10 @@ class LoginError implements ApplicationErrorInterface
     {
         return "Не удалось авторизовать пользователя";
     }
+    public static function getCode()
+    {
+        return 417;
+    }
 
 
 }

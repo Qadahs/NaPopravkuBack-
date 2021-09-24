@@ -14,4 +14,8 @@ class RegistrationError implements ApplicationErrorInterface
     {
         return "Не удалось зарегестрировать пользователя";
     }
+    public static function getCode()
+    {
+        return 417;
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Rest\Errors\ApplicationErrors;
+use App\Modules\Rest\RestResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,7 @@ class LoginController extends Controller
 
         if(!$isAuth)
         {
-            return rest(417,[],ApplicationErrors::sendError(['login']));
+            return RestResponse::response(417,[],['login']);
         };
         $user = auth()->user();
         $token = $user->createToken('secretToken')->plainTextToken;
@@ -28,6 +29,6 @@ class LoginController extends Controller
             'user'=>$user,
             'token'=>$token,
         ];
-        return rest(201,$response);
+        return RestResponse::response(201,$response);
     }
 }

@@ -20,17 +20,20 @@ class ApplicationErrors
                 {
                     $errorsArray["errors"][]=RegistrationError::getError();
                     $errorsArray["messages"][]=RegistrationError::getMessage();
+                    $errorsArray["codes"][]=RegistrationError::getCode();
                     break;
                 }
                 case 'login':
                 {
                     $errorsArray["errors"][]=LoginError::getError();
                     $errorsArray["messages"][]=LoginError::getMessage();
+                    $errorsArray["codes"][]=LoginError::getCode();
                     break;
                 }
                 default: {
                     $errorsArray["errors"][]=DefaultError::getError();
                     $errorsArray["messages"][]=DefaultError::getMessage();
+                    $errorsArray["codes"][]=DefaultError::getCode();
                     break;
                 }
             }

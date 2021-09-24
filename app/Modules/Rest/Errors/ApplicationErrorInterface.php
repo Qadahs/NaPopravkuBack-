@@ -6,4 +6,5 @@ interface ApplicationErrorInterface
 {
     public static function getError();
     public static function getMessage();
+    public static function getCode();
 }
