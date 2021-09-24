@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tags extends Model
 {
     use HasFactory;
+    public function article()
+    {
+        $this->belongsTo(Articles::class,'id','articles_id');
+    }
 }

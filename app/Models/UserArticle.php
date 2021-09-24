@@ -9,4 +9,17 @@ class UserArticle extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $table='user_article';
+    protected $fillable = [
+        'users_id',
+        'articles_id'
+    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class,'users_id','id');
+    }
+    public function article()
+    {
+        return $this->belongsTo(Articles::class,'articles_id','id');
+    }
 }

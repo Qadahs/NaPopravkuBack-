@@ -9,4 +9,11 @@ class Articles extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $fillable=[
+        'created_at'
+    ];
+    public function tags()
+    {
+       return  $this->hasMany(ArticleTag::class,'articles_id','id');
+    }
 }

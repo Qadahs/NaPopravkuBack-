@@ -4,6 +4,7 @@ namespace App\Modules\Rest\Errors;
 
 use App\Modules\Rest\Errors\Components\DefaultError;
 use App\Modules\Rest\Errors\Components\LoginError;
+use App\Modules\Rest\Errors\Components\PageError;
 use App\Modules\Rest\Errors\Components\RegistrationError;
 
 class ApplicationErrors
@@ -24,6 +25,11 @@ class ApplicationErrors
                 case 'login':
                 {
                     self::getData($errorsArray,LoginError::class);
+                    break;
+                }
+                case 'page':
+                {
+                    self::getData($errorsArray,PageError::class);
                     break;
                 }
                 default: {
