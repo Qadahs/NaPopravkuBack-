@@ -67,7 +67,7 @@ class ArticleDataTemplate implements DataTemplateInterface
     private function getPageArticle($page)
     {
 
-        $test = UserArticle::skip(($page-1)*10)->take(10)->get();
+        $test = UserArticle::skip(($page-1)*10)->take(10)->orderBy('id', 'desc')->get();
 
         return $test;
 

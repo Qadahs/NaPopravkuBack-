@@ -13,11 +13,16 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+//Article routes
 Route::prefix('/article')->group(function(){
     Route::get('/',[\App\Http\Controllers\Articles\ArticleController::class,'get']);
     Route::get('/count',[\App\Http\Controllers\Articles\ArticleController::class,'count']);
+    Route::post('/add',[\App\Http\Controllers\Articles\ArticleAddController::class,'post']);
 });
+//Tags routes
 Route::get('/tags',[\App\Http\Controllers\Tags\TagsController::class,'get']);
+//Authentication routes
 Route::post('/register',[\App\Http\Controllers\Authentication\RegisterController::class,'post']);
 Route::post('/login',[\App\Http\Controllers\Authentication\LoginController::class,'post']);
 Route::middleware('auth:sanctum')->group(function(){
@@ -26,5 +31,4 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     Route::get('/auth',[\App\Http\Controllers\Authentication\AuthController::class,'get']);
     Route::get('/logout',[\App\Http\Controllers\Authentication\LogoutController::class,'get']);
-    Route::post('/article/add',[\App\Http\Controllers\Articles\ArticleAddController::class,'post']);
 });

@@ -13,8 +13,8 @@ class RegisterController extends Controller
     public function post(Request $request)
     {
         $credentials = $request->validate([
-            'login'=>['required','string'],
-            'password'=>['required','string','confirmed'],
+            'login'=>['required','string','min:4','max:40'],
+            'password'=>['required','string','confirmed','min:4','max:40'],
         ]);
         $user = User::create([
             'login'=>$credentials['login'],

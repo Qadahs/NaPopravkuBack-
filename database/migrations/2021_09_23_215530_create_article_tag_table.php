@@ -17,8 +17,8 @@ class CreateArticleTagTable extends Migration
             $table->id()->index();
             $table->unsignedBigInteger('articles_id')->index();
             $table->unsignedBigInteger('tags_id')->index();
-            $table->foreign('articles_id')->references('id')->on('articles');
-            $table->foreign('tags_id')->references('id')->on('tags');
+            $table->foreign('articles_id')->references('id')->on('articles')->cascadeOnDelete();
+            $table->foreign('tags_id')->references('id')->on('tags')->cascadeOnDelete();
         });
     }
 

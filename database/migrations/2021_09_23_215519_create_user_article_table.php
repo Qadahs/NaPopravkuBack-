@@ -17,8 +17,8 @@ class CreateUserArticleTable extends Migration
             $table->id()->index();
             $table->unsignedBigInteger('users_id')->index();
             $table->unsignedBigInteger('articles_id')->index();
-            $table->foreign('users_id')->references('id')->on('users');
-            $table->foreign('articles_id')->references('id')->on('articles');
+            $table->foreign('users_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('articles_id')->references('id')->on('articles')->cascadeOnDelete();
         });
     }
 
