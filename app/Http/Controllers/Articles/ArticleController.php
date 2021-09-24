@@ -15,6 +15,8 @@ class ArticleController extends Controller
 {
     public function get(Request $request,ArticleDataTemplate $articleDataTemplate)
     {
+        $pagesCount = (int)ceil(UserArticle::all()->count()/10);
+        $articleDataTemplate->setPagesCount($pagesCount);
         $articleDataTemplate->setPage($request->input('page'));
         $articleDataTemplate->setArticles(UserArticle::all());
         $data = DataTemplator::data($articleDataTemplate);

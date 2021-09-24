@@ -5,12 +5,13 @@ namespace App\Modules\Rest\Data\Components;
 use App\Models\UserArticle;
 use App\Modules\Rest\Data\DataTemplateInterface;
 use App\Modules\Rest\RestResponse;
+use Illuminate\Support\Facades\Redis;
 
 class ArticleDataTemplate implements DataTemplateInterface
 {
-    private $page = 0;
+    private $page = 1;
     private $articles;
-    private $pagesCount;
+    private $pagesCount=1;
     public function validate()
     {
        if($this->page>$this->pagesCount)
@@ -21,17 +22,15 @@ class ArticleDataTemplate implements DataTemplateInterface
     }
     public function bootstrap()
     {
-        if(!$this->page)
-        {
-            $this->articles=$this->getListOfArticles();
-        }
+
+        $this->articles=$this->getPageArticle($this->page);
     }
     public function template()
     {
         $response = [];
-        $_index = 0;
        foreach ($this->articles as $article)
        {
+
            $singleArticle = [
                'id'=>$article->id,
                'user'=>[
@@ -40,6 +39,7 @@ class ArticleDataTemplate implements DataTemplateInterface
                 ],
                 'article'=>[
                   'id'=>$article->article->id,
+                    'text'=>$this->getText($article->article->id),
                     'created_at'=>$article->article->created_at?$article->article->created_at:'',
                    'tags'=>[]
                 ]
@@ -55,10 +55,18 @@ class ArticleDataTemplate implements DataTemplateInterface
        }
         return $response;
     }
-
+    private function getText($id)
+    {
+       $text =  Redis::hget('articles',$id);
+       return $text?$text:'';
+    }
     private function getListOfArticles()
     {
         return UserArticle::all();
+    }
+    private function getPageArticle($page)
+    {
+        return UserArticle::all()->skip(($page-1)*2)->take(10);
     }
 
     /**
@@ -74,7 +82,7 @@ class ArticleDataTemplate implements DataTemplateInterface
      */
     public function setPage($page): void
     {
-        if(is_int($page))
+        if(is_int((int)$page))
         {
             $this->page = $page;
         }
@@ -95,6 +103,22 @@ class ArticleDataTemplate implements DataTemplateInterface
     public function setArticles($articles): void
     {
         $this->articles = $articles;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPagesCount(): int
+    {
+        return $this->pagesCount;
+    }
+
+    /**
+     * @param int $pagesCount
+     */
+    public function setPagesCount(int $pagesCount): void
+    {
+        $this->pagesCount = $pagesCount;
     }
 
 
