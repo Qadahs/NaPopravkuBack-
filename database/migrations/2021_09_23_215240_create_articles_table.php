@@ -15,6 +15,7 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id()->index();
+            $table->text('slug')->unique();
             $table->timestamps();
         });
     }
