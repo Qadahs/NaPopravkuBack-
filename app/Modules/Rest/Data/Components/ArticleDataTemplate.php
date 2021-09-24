@@ -4,15 +4,20 @@ namespace App\Modules\Rest\Data\Components;
 
 use App\Models\UserArticle;
 use App\Modules\Rest\Data\DataTemplateInterface;
+use App\Modules\Rest\RestResponse;
 
 class ArticleDataTemplate implements DataTemplateInterface
 {
     private $page = 0;
     private $articles;
-
+    private $pagesCount;
     public function validate()
     {
-       //pagevalidation
+       if($this->page>$this->pagesCount)
+       {
+           return 'page';
+       }
+       return null;
     }
     public function bootstrap()
     {
@@ -69,7 +74,7 @@ class ArticleDataTemplate implements DataTemplateInterface
      */
     public function setPage($page): void
     {
-        if($page)
+        if(is_int($page))
         {
             $this->page = $page;
         }

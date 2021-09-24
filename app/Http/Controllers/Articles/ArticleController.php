@@ -18,6 +18,7 @@ class ArticleController extends Controller
         $articleDataTemplate->setPage($request->input('page'));
         $articleDataTemplate->setArticles(UserArticle::all());
         $data = DataTemplator::data($articleDataTemplate);
+        if(isset($data['errors'])) return RestResponse::response(1,[],[$data['errors']]);
         return RestResponse::response(201,$data);
     }
 }

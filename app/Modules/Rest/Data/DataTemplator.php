@@ -9,7 +9,11 @@ class DataTemplator
 {
     public static function data(DataTemplateInterface $object)
     {
-        $object->validate();
+       $errors =  $object->validate();
+       if($errors)
+       {
+           return ['errors'=>$errors];
+       }
         $object->bootstrap();
         try
         {

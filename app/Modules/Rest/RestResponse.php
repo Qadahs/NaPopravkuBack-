@@ -27,7 +27,7 @@ class RestResponse
             'errors'=>($err)?$err['errors']:null,
             'message'=>($err)?array_pop($err['messages']):$message,
         ];
-        return response($response,$code);
+        return response($response,$response['status']);
     }
 
 }
