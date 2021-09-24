@@ -22,7 +22,7 @@ class DataTemplator
         catch (\Exception $e)
         {
             Log::error($e->getMessage());
-            return [];
+            return ['errors'=>'system'];;
         }
     }
 }

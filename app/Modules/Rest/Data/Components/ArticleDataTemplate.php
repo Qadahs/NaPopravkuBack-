@@ -66,7 +66,11 @@ class ArticleDataTemplate implements DataTemplateInterface
     }
     private function getPageArticle($page)
     {
-        return UserArticle::all()->skip(($page-1)*2)->take(10);
+
+        $test = UserArticle::skip(($page-1)*10)->take(10)->get();
+
+        return $test;
+
     }
 
     /**
@@ -82,9 +86,9 @@ class ArticleDataTemplate implements DataTemplateInterface
      */
     public function setPage($page): void
     {
-        if(is_int((int)$page))
+        if(is_int((int)$page) && (int)$page)
         {
-            $this->page = $page;
+            $this->page = (int)$page;
         }
 
     }

@@ -18,9 +18,16 @@ class ArticleController extends Controller
         $pagesCount = (int)ceil(UserArticle::all()->count()/10);
         $articleDataTemplate->setPagesCount($pagesCount);
         $articleDataTemplate->setPage($request->input('page'));
-        $articleDataTemplate->setArticles(UserArticle::all());
         $data = DataTemplator::data($articleDataTemplate);
         if(isset($data['errors'])) return RestResponse::response(1,[],[$data['errors']]);
         return RestResponse::response(201,$data);
+    }
+    public function count()
+    {
+        $pagesCount = (int)ceil(UserArticle::all()->count()/10);
+        $data=[
+            'count'=>$pagesCount,
+        ];
+        return RestResponse::response(200,$data);
     }
 }
