@@ -2,9 +2,10 @@
 
 namespace App\Modules\Rest\Errors\Components;
 
-use App\Modules\Rest\Errors\ApplicationErrorInterface;
+use App\Modules\Rest\Errors\ErrorInterface;
+use App\Modules\Rest\RestResponse;
 
-class LoginError implements ApplicationErrorInterface
+class LoginError implements ErrorInterface
 {
     public static function getError()
     {
@@ -18,6 +19,4 @@ class LoginError implements ApplicationErrorInterface
     {
         return 417;
     }
-
-
 }

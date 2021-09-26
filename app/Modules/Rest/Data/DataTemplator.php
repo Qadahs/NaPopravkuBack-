@@ -4,25 +4,14 @@ namespace App\Modules\Rest\Data;
 
 use App\Modules\Rest\Data\Components\ArticleDataTemplate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class DataTemplator
 {
-    public static function data(DataTemplateInterface $object)
+    public static function data($object)
     {
-       $errors =  $object->validate();
-       if($errors)
-       {
-           return ['errors'=>$errors];
-       }
+        $object->validate();
         $object->bootstrap();
-        try
-        {
-            return $object->template();
-        }
-        catch (\Exception $e)
-        {
-            Log::error($e->getMessage());
-            return ['errors'=>'system'];;
-        }
+        $object->template();
     }
 }

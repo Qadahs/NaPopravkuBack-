@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Modules\Rest\Errors\ApplicationErrors;
+use App\Modules\Rest\Errors\ErrorTemplator;
 use App\Modules\Rest\RestResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

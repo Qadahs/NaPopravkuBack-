@@ -2,15 +2,16 @@
 
 namespace App\Modules\Rest\Errors\Components;
 
-use App\Modules\Rest\Errors\ApplicationErrorInterface;
+use App\Modules\Rest\Errors\ErrorInterface;
+use App\Modules\Rest\RestResponse;
+use Illuminate\Support\Facades\App;
 
-class DefaultError implements ApplicationErrorInterface
+class ServerError implements ErrorInterface
 {
     public static function getError()
     {
-        return ['ServerError'=>'Ошибка на сервере'];
+        return ['Server'=>'Ошибка на сервере'];
     }
-
     public static function getMessage()
     {
         return "Ошибка на сервере";

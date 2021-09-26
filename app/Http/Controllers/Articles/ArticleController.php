@@ -15,19 +15,12 @@ class ArticleController extends Controller
 {
     public function get(Request $request,ArticleDataTemplate $articleDataTemplate)
     {
-        $pagesCount = (int)ceil(UserArticle::all()->count()/10);
-        $articleDataTemplate->setPagesCount($pagesCount);
-        $articleDataTemplate->setPage($request->input('page'));
-        $data = DataTemplator::data($articleDataTemplate);
-        if(isset($data['errors'])) return RestResponse::response(1,[],[$data['errors']]);
-        return RestResponse::response(201,$data);
-    }
-    public function count()
-    {
-        $pagesCount = (int)ceil(UserArticle::all()->count()/10);
-        $data=[
-            'count'=>$pagesCount,
-        ];
-        return RestResponse::response(200,$data);
+        $page = $request->input('page');
+        if($page)
+        {
+            $articleDataTemplate->setPage((int)$page);
+        }
+        DataTemplator::data($articleDataTemplate);
+        RestResponse::response();
     }
 }

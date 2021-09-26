@@ -4,7 +4,12 @@ namespace App\Modules\Rest\Data\Components;
 
 use App\Models\UserArticle;
 use App\Modules\Rest\Data\DataTemplateInterface;
+use App\Modules\Rest\Data\DataTemplator;
+use App\Modules\Rest\Errors\Components\IncorrectPageError;
+use App\Modules\Rest\Errors\Components\ServerError;
+use App\Modules\Rest\Errors\ErrorTemplator;
 use App\Modules\Rest\RestResponse;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redis;
 
 class ArticleDataTemplate implements DataTemplateInterface
@@ -14,23 +19,21 @@ class ArticleDataTemplate implements DataTemplateInterface
     private $pagesCount=1;
     public function validate()
     {
+       $this->pagesCount = $this->getPagesCount();
        if($this->page>$this->pagesCount)
        {
-           return 'page';
+          ErrorTemplator::error(IncorrectPageError::class);
        }
-       return null;
     }
     public function bootstrap()
     {
-
         $this->articles=$this->getPageArticle($this->page);
     }
     public function template()
     {
-        $response = [];
+        $body = [];
        foreach ($this->articles as $article)
        {
-
            $singleArticle = [
                'id'=>$article->id,
                'user'=>[
@@ -40,7 +43,7 @@ class ArticleDataTemplate implements DataTemplateInterface
                 'article'=>[
                   'id'=>$article->article->id,
                     'text'=>$this->getText($article->article->id),
-                    'created_at'=>$article->article->created_at?$article->article->created_at:'',
+                    'created_at'=>$article->article->created_at,
                    'tags'=>[]
                 ]
            ];
@@ -51,26 +54,41 @@ class ArticleDataTemplate implements DataTemplateInterface
                    'title'=>$tag->tag->title,
                ];
            }
-           $response['articles'][] =$singleArticle;
+           $body['articles'][] =$singleArticle;
        }
-        return $response;
+       $body['pagesCount']=$this->pagesCount;
+        RestResponse::addData($body);
     }
     private function getText($id)
     {
-       $text =  Redis::hget('articles',$id);
-       return $text?$text:'';
-    }
-    private function getListOfArticles()
-    {
-        return UserArticle::all();
+        try {
+            $text =  Redis::hget('articles',$id);
+            return $text?$text:'';
+        }
+        catch (\Exception $e)
+        {
+            ErrorTemplator::error(ServerError::class);
+        }
     }
     private function getPageArticle($page)
     {
-
-        $test = UserArticle::skip(($page-1)*10)->take(10)->orderBy('id', 'desc')->get();
-
-        return $test;
-
+        try {
+            return UserArticle::skip(($page-1)*10)->take(10)->orderBy('id', 'desc')->get();
+        }
+        catch (\Exception $e)
+        {
+            ErrorTemplator::error(ServerError::class);
+        }
+    }
+    private function getPagesCount()
+    {
+        try {
+            return (int)ceil(UserArticle::all()->count()/10);
+        }
+        catch (\Exception $e)
+        {
+            ErrorTemplator::error(ServerError::class);
+        }
     }
 
     /**
@@ -86,13 +104,11 @@ class ArticleDataTemplate implements DataTemplateInterface
      */
     public function setPage($page): void
     {
-        if(is_int((int)$page) && (int)$page)
+        if($page!=0)
         {
-            $this->page = (int)$page;
+            $this->page = $page;
         }
-
     }
-
     /**
      * @return mixed
      */
@@ -109,21 +125,8 @@ class ArticleDataTemplate implements DataTemplateInterface
         $this->articles = $articles;
     }
 
-    /**
-     * @return int
-     */
-    public function getPagesCount(): int
-    {
-        return $this->pagesCount;
-    }
 
-    /**
-     * @param int $pagesCount
-     */
-    public function setPagesCount(int $pagesCount): void
-    {
-        $this->pagesCount = $pagesCount;
-    }
+
 
 
 }

@@ -2,9 +2,9 @@
 
 namespace App\Modules\Rest\Errors\Components;
 
-use App\Modules\Rest\Errors\ApplicationErrorInterface;
+use App\Modules\Rest\Errors\ErrorInterface;
 
-class RegistrationError implements ApplicationErrorInterface
+class RegistrationError implements ErrorInterface
 {
     public static function getError()
     {

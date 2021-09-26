@@ -4,20 +4,21 @@ namespace App\Modules\Rest\Errors\Components;
 
 use App\Modules\Rest\Errors\ErrorInterface;
 
-class PageError implements ErrorInterface
+class IncorrectPageError implements ErrorInterface
 {
     public static function getError()
     {
-        return ['PageError'=>'Страницы не существует'];
+        return ['Page'=>'Такой страницы не существует'];
     }
 
     public static function getMessage()
     {
-        return 'Страницы не существует';
+        return 'Такой страницы не существует';
     }
 
     public static function getCode()
     {
-        return 417;
+        return 404;
     }
+
 }

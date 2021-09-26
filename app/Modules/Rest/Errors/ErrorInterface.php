@@ -2,7 +2,7 @@
 
 namespace App\Modules\Rest\Errors;
 
-interface ApplicationErrorInterface
+interface ErrorInterface
 {
     public static function getError();
     public static function getMessage();
