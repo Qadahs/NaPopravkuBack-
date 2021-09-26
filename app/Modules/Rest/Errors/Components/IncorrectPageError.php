@@ -8,7 +8,7 @@ class IncorrectPageError implements ErrorInterface
 {
     public static function getError()
     {
-        return ['Page'=>'Такой страницы не существует'];
+        return ['page'=>['Такой страницы не существует']];
     }
 
     public static function getMessage()

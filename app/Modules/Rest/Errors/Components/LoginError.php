@@ -9,7 +9,7 @@ class LoginError implements ErrorInterface
 {
     public static function getError()
     {
-        return ["LoginError"=>'Не удалось авторизовать пользователя'];
+        return ["loginError"=>['Не удалось авторизовать пользователя']];
     }
     public static function getMessage()
     {

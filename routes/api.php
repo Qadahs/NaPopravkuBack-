@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //Article routes
 Route::prefix('/article')->group(function(){
     Route::get('/',[\App\Http\Controllers\Articles\ArticleController::class,'get']);
-    Route::get('/count',[\App\Http\Controllers\Articles\ArticleController::class,'count']);
+    Route::post('/filter',[\App\Http\Controllers\Articles\ArticleController::class,'filter']);
     Route::post('/add',[\App\Http\Controllers\Articles\ArticleAddController::class,'post']);
 });
 //Tags routes

@@ -8,7 +8,7 @@ class RegistrationError implements ErrorInterface
 {
     public static function getError()
     {
-       return ['RegistrationError'=>'Не удалось зарегестрировать пользователя'];
+       return ['registrationError'=>['Не удалось зарегестрировать пользователя']];
     }
     public static function getMessage()
     {

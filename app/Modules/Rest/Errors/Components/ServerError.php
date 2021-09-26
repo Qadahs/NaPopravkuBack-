@@ -10,7 +10,7 @@ class ServerError implements ErrorInterface
 {
     public static function getError()
     {
-        return ['Server'=>'Ошибка на сервере'];
+        return ['server'=>['Ошибка на сервере']];
     }
     public static function getMessage()
     {
