@@ -26,8 +26,7 @@ Route::get('/tags',[\App\Http\Controllers\Tags\TagsController::class,'get']);
 //Authentication routes
 Route::post('/register',[\App\Http\Controllers\Authentication\RegisterController::class,'post']);
 Route::post('/login',[\App\Http\Controllers\Authentication\LoginController::class,'post']);
-Route::post('/public/account',[\App\Http\Controllers\PublicData\PublicAccountController::class,'get']);
-Route::post('/public/article',[\App\Http\Controllers\PublicData\PublicArticleController::class,'get']);
+
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/follower',[\App\Http\Controllers\Articles\ArticleSubscriberController::class,'post']);
@@ -40,4 +39,6 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     Route::get('/auth',[\App\Http\Controllers\Authentication\AuthController::class,'get']);
     Route::get('/logout',[\App\Http\Controllers\Authentication\LogoutController::class,'get']);
+    Route::post('/public/account',[\App\Http\Controllers\PublicData\PublicAccountController::class,'get']);
+    Route::post('/public/article',[\App\Http\Controllers\PublicData\PublicArticleController::class,'get']);
 });

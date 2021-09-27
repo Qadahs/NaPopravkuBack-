@@ -4,6 +4,8 @@ namespace App\Modules\Rest\Data\Components\Article\Filters;
 
 use App\Models\User;
 use App\Modules\Rest\Data\Components\FilterInterface;
+use App\Modules\Rest\Errors\Components\ServerError;
+use App\Modules\Rest\Errors\ErrorTemplator;
 use Illuminate\Http\Request;
 
 class UserFilter implements FilterInterface
@@ -19,7 +21,7 @@ class UserFilter implements FilterInterface
         $id = $request->input('filters.user');
         if(!(int)$id)
         {
-            //throw error
+            ErrorTemplator::error(ServerError::class);
         }
         $this->setId((int)$id);
 

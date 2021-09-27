@@ -6,6 +6,8 @@ use App\Modules\Rest\Data\Components\Article\Filters\ArticleFilter;
 use App\Modules\Rest\Data\Components\Article\Filters\FollowerFilter;
 use App\Modules\Rest\Data\Components\Article\Filters\TagFilter;
 use App\Modules\Rest\Data\Components\Article\Filters\UserFilter;
+use App\Modules\Rest\Errors\Components\ServerError;
+use App\Modules\Rest\Errors\ErrorTemplator;
 use Illuminate\Http\Request;
 
 
@@ -23,7 +25,7 @@ class FilterParser
         $arrFilters = [];
         $reqFilters = $request->input('filters');
         if (!$reqFilters) {
-            // throw error
+            ErrorTemplator::error(ServerError::class);
         }
         foreach ($reqFilters as $reqKey => $reqVal) {
             foreach (self::$filters as $key => $val) {

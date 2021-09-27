@@ -12,29 +12,6 @@ class RestResponse
         'message'=>''
     ];
     private static $code = 200;
-//    public static function response($code,array $data=[],array $errors = [],$message='')
-//    {
-//        if(!is_string($message))
-//        {
-//            throw new \Error('Parameter $message must be string!');
-//        }
-//        $err = null;
-//        try
-//        {
-//            $err = ErrorTemplator::sendError($errors);
-//        }
-//        catch (\Error $e)
-//        {
-//            $err=ErrorTemplator::sendError(['serverError']);
-//        }
-//        $response = [
-//            'status'=>(!$err)?$code:array_pop($err['codes']),
-//            'data'=>count($data)?$data:null,
-//            'errors'=>($err)?$err['errors']:null,
-//            'message'=>($err)?array_pop($err['messages']):$message,
-//        ];
-//        return response($response,$response['status']);
-//    }
     public static function addData(array $data)
     {
         self::$body['data'] = array_merge(self::$body['data'],$data);

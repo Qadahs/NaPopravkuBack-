@@ -4,6 +4,8 @@ namespace App\Modules\Rest\Data\Components\Article\Filters;
 
 use App\Models\ArticleTag;
 use App\Modules\Rest\Data\Components\FilterInterface;
+use App\Modules\Rest\Errors\Components\ServerError;
+use App\Modules\Rest\Errors\ErrorTemplator;
 use Illuminate\Http\Request;
 
 class TagFilter implements FilterInterface
@@ -28,7 +30,7 @@ class TagFilter implements FilterInterface
     {
         $tags = $request->input('filters.tags');
         if (!$tags) {
-            //throw error
+           ErrorTemplator::error(ServerError::class);
         }
         $this->setTags($tags);
     }

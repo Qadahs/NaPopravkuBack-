@@ -18,7 +18,7 @@ class AddArticleError implements ErrorInterface
 
     public static function getCode()
     {
-        return 404;
+        return 417;
     }
 
 
