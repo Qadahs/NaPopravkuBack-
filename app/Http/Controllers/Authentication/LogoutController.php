@@ -11,7 +11,7 @@ class LogoutController extends Controller
 {
     public function get(Request $request)
     {
-       auth()->user()->tokens()->delete();
-       return RestResponse::response(201);
+        auth()->user()->tokens()->delete();
+        RestResponse::response();
     }
 }

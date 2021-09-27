@@ -11,6 +11,8 @@ use App\Modules\Rest\Data\Components\Article\ArticleDataTemplate;
 use App\Modules\Rest\Data\Components\Article\Filters\UserFilter;
 use App\Modules\Rest\Data\Components\FilterParser;
 use App\Modules\Rest\Data\DataTemplator;
+use App\Modules\Rest\Errors\Components\ServerError;
+use App\Modules\Rest\Errors\ErrorTemplator;
 use App\Modules\Rest\RestResponse;
 use Illuminate\Http\Request;
 
@@ -28,10 +30,6 @@ class ArticleController extends Controller
     }
     public function filter(Request $request,ArticleDataTemplate $articleDataTemplate)
     {
-//        $test = new UserArticle;
-//        $test = $test->join('users','user_article.users_id','=','users.id');
-//        dd($test->getQuery()->joins[0]->table);
-       // dd(UserArticle::where('users_id','qadahs')->join('users','user_article.users_id','=','users.id')->get());
         $page = $request->input('page');
         if($page)
         {
@@ -41,5 +39,24 @@ class ArticleController extends Controller
         $articleDataTemplate->setFilters($filters);
         DataTemplator::data($articleDataTemplate);
         RestResponse::response();
+    }
+    public function delete(Request $request)
+    {
+        $id = (int)$request->input('id');
+        if($id)
+        {
+            try {
+                if(UserArticle::where('articles_id',$id)->first()->user->id === $request->user()->id)
+                {
+                    Articles::where('id',$id)->delete();
+                    RestResponse::response();
+                }
+            }
+            catch (\Exception $e)
+            {
+                ErrorTemplator::error(ServerError::class);
+            }
+        }
+        ErrorTemplator::error(ServerError::class);
     }
 }

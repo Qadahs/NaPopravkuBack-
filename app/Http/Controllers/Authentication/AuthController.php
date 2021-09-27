@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Rest\RestResponse;
-use http\Env\Response;
-use Illuminate\Http\Request;
+
 
 class AuthController extends Controller
 {
@@ -13,8 +12,9 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         $data = [
-            'user'=>$user
+            'user' => $user
         ];
-        return RestResponse::response(200,$data);
+        RestResponse::addData($data);
+        RestResponse::response();
     }
 }

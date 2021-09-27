@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Articles;
 use App\Models\ArticleTag;
 use App\Models\UserArticle;
+use App\Modules\Rest\Errors\Components\AddArticleError;
+use App\Modules\Rest\Errors\Components\ServerError;
+use App\Modules\Rest\Errors\ErrorTemplator;
+use App\Modules\Rest\RestResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
@@ -27,9 +31,9 @@ class ArticleAddController extends Controller
             );
         }
         catch (\Exception $e){
-            return response(501);
+          ErrorTemplator::error(AddArticleError::class);
         }
-        return response(200);
+        RestResponse::response();
     }
     private function insertArticle($text,$id,$tags)
     {

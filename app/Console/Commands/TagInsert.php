@@ -35,7 +35,7 @@ class TagInsert extends Command
      */
     public function handle()
     {
-        $arr = ['a','b','c','d'];
+        $arr = ['Политика','История','Фильмы','Всякое'];
         foreach ($arr as $title )
         {
             Tags::create([

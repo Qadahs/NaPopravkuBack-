@@ -2,10 +2,10 @@
 
 namespace App\Modules\Rest\Errors;
 
+use App\Modules\Rest\Errors\Components\AddArticleError;
 use App\Modules\Rest\Errors\Components\IncorrectPageError;
 use App\Modules\Rest\Errors\Components\ServerError;
 use App\Modules\Rest\Errors\Components\LoginError;
-use App\Modules\Rest\Errors\Components\PageError;
 use App\Modules\Rest\Errors\Components\RegistrationError;
 use App\Modules\Rest\RestResponse;
 
@@ -15,9 +15,9 @@ class ErrorTemplator
         [
             ServerError::class,
             LoginError::class,
-            PageError::class,
             RegistrationError::class,
             IncorrectPageError::class,
+            AddArticleError::class
         ];
 
     public static function error($errorType)

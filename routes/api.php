@@ -20,12 +20,21 @@ Route::prefix('/article')->group(function(){
     Route::post('/filter',[\App\Http\Controllers\Articles\ArticleController::class,'filter']);
     Route::post('/add',[\App\Http\Controllers\Articles\ArticleAddController::class,'post']);
 });
+
 //Tags routes
 Route::get('/tags',[\App\Http\Controllers\Tags\TagsController::class,'get']);
 //Authentication routes
 Route::post('/register',[\App\Http\Controllers\Authentication\RegisterController::class,'post']);
 Route::post('/login',[\App\Http\Controllers\Authentication\LoginController::class,'post']);
+Route::post('/public/account',[\App\Http\Controllers\PublicData\PublicAccountController::class,'get']);
+Route::post('/public/article',[\App\Http\Controllers\PublicData\PublicArticleController::class,'get']);
+
 Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/follower',[\App\Http\Controllers\Articles\ArticleSubscriberController::class,'post']);
+    Route::post('/follow',[\App\Http\Controllers\Articles\ArticleSubscriberController::class,'follow']);
+    Route::delete('/unfollow',[\App\Http\Controllers\Articles\ArticleSubscriberController::class,'unfollow']);
+    Route::delete('/article',[\App\Http\Controllers\Articles\ArticleController::class,'delete']);
+    Route::get('/follow/check',[\App\Http\Controllers\Articles\ArticleSubscriberController::class,'checkFollow']);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });

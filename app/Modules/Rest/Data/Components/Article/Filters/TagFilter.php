@@ -11,6 +11,7 @@ class TagFilter implements FilterInterface
     private $tags = [];
     public function filter($model)
     {
+        if(!count($this->tags)) return $model;
         $articleTags = new ArticleTag;
         $articleTags = $articleTags
             ->whereIn('tags_id', $this->tags)
